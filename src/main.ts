@@ -27,13 +27,13 @@ async function run(): Promise<void> {
   // You can also pass in additional options as a second parameter to getOctokit
   // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
 
-  const { data: commit } = await octokit.rest.git.getCommit({
+  const {data: commit} = await octokit.rest.git.getCommit({
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
     commit_sha: github.context.sha
   })
 
-  console.log(commit)
+  core.info(JSON.stringify(commit))
 }
 
 run()
