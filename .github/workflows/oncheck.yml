@@ -2,6 +2,8 @@ name: 'on-check'
 on: # rebuild any PRs and main branch changes
   check_run:
     types: [completed]
+  check_suite:
+    types: [completed]
   status:
 
 jobs:
