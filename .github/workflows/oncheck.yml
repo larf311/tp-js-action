@@ -8,5 +8,6 @@ jobs:
   print: # make sure build/ci work properly
     runs-on: ubuntu-latest
     steps:
-      run:
-        env
+      - name: Print env
+        run:
+          env
