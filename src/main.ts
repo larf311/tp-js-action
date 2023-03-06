@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import {wait} from './wait'
+// import {wait} from './wait'
 
 async function run(): Promise<void> {
   // try {
@@ -21,19 +21,37 @@ async function run(): Promise<void> {
   // myToken: ${{ secrets.GITHUB_TOKEN }}
   // https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token#about-the-github_token-secret
   const myToken = core.getInput('myToken')
-
   const octokit = github.getOctokit(myToken)
 
   // You can also pass in additional options as a second parameter to getOctokit
   // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
 
-  const {data: commit} = await octokit.rest.git.getCommit({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    commit_sha: github.context.sha
-  })
+  // const {data: commit} = await octokit.rest.git.getCommit({
+  //   owner: github.context.repo.owner,
+  //   repo: github.context.repo.repo,
+  //   commit_sha: github.context.sha
+  // })
+  // const args = {
+  //   owner: github.context.repo.owner,
+  //   repo: github.context.repo.repo,
+  //   ref: github.context.sha
+  // }
 
-  core.info(JSON.stringify(commit))
+  // core.info(JSON.stringify(args))
+
+  // const commitStatuses = await octokit.rest.repos.listCommitStatusesForRef({
+  //   owner: github.context.repo.owner,
+  //   repo: github.context.repo.repo,
+  //   ref: github.context.sha
+  // })
+
+  // const checks = await octokit.rest.checks.listForRef({
+  //   owner: github.context.repo.owner,
+  //   repo: github.context.repo.repo,
+  //   ref: github.context.sha
+  // })
+
+  // core.info(JSON.stringify(checks))
 }
 
 run()

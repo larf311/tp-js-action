@@ -41,6 +41,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
+// import {wait} from './wait'
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         // try {
@@ -61,12 +62,28 @@ function run() {
         const octokit = github.getOctokit(myToken);
         // You can also pass in additional options as a second parameter to getOctokit
         // const octokit = github.getOctokit(myToken, {userAgent: "MyActionVersion1"});
-        const { data: commit } = yield octokit.rest.git.getCommit({
-            owner: github.context.repo.owner,
-            repo: github.context.repo.repo,
-            commit_sha: github.context.sha
-        });
-        core.info(JSON.stringify(commit));
+        // const {data: commit} = await octokit.rest.git.getCommit({
+        //   owner: github.context.repo.owner,
+        //   repo: github.context.repo.repo,
+        //   commit_sha: github.context.sha
+        // })
+        // const args = {
+        //   owner: github.context.repo.owner,
+        //   repo: github.context.repo.repo,
+        //   ref: github.context.sha
+        // }
+        // core.info(JSON.stringify(args))
+        // const commitStatuses = await octokit.rest.repos.listCommitStatusesForRef({
+        //   owner: github.context.repo.owner,
+        //   repo: github.context.repo.repo,
+        //   ref: github.context.sha
+        // })
+        // const checks = await octokit.rest.checks.listForRef({
+        //   owner: github.context.repo.owner,
+        //   repo: github.context.repo.repo,
+        //   ref: github.context.sha
+        // })
+        // core.info(JSON.stringify(checks))
     });
 }
 run();

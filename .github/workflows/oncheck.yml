@@ -1,0 +1,12 @@
+name: 'build-test'
+on: # rebuild any PRs and main branch changes
+  check_run:
+    types: [completed]
+  status
+
+jobs:
+  print: # make sure build/ci work properly
+    runs-on: ubuntu-latest
+    steps:
+      run:
+        env
