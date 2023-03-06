@@ -1,4 +1,4 @@
-name: 'build-test'
+name: 'on-check'
 on: # rebuild any PRs and main branch changes
   check_run:
     types: [completed]
