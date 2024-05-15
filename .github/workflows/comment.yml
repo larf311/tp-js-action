@@ -16,5 +16,6 @@ jobs:
         echo "Label is test-ring-1, commenting and removing label..."
         # Comment "hello world"
         echo "hello world"
+        echo "${GITHUB_EVENT_PULL_REQUEST}"
         # Remove label
         gh pr edit --remove-label ${GITHUB_EVENT_PULL_REQUEST} test-ring-1
