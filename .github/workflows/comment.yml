@@ -30,8 +30,8 @@ jobs:
 
           headInfo=$(gh pr view ${{ github.event.issue.number }} --json headRefName,headRefOid)
           echo "Head Info: $headInfo"
-          echo "headSha=$(echo $foo | jq -r '.headRefOid')" >> $GITHUB_OUTPUT
-          echo "headRef=$(echo $foo | jq -r '.headRefName')" >> $GITHUB_OUTPUT
+          echo "headSha=$(echo $headInfo | jq -r '.headRefOid')" >> $GITHUB_OUTPUT
+          echo "headRef=$(echo $headInfo | jq -r '.headRefName')" >> $GITHUB_OUTPUT
 
 
   trigger-test-ring-1:
