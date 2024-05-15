@@ -8,7 +8,7 @@ jobs:
   handle_test_ring_1_label:
     runs-on: ubuntu-latest
     steps:
-    # - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
     - name: Check if label is "test-ring-1"
       if: ${{ github.event.label.name == 'test-ring-1' }}
       env:
