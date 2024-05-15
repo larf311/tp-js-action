@@ -16,4 +16,4 @@ jobs:
         # Comment "hello world"
         echo "hello world"
         # Remove label
-        gh pr label remove ${GITHUB_EVENT_PULL_REQUEST} test-ring-1
+        gh pr edit --remove-label ${GITHUB_EVENT_PULL_REQUEST} test-ring-1
