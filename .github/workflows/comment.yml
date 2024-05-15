@@ -1,0 +1,11 @@
+name: Run test-ring-1 on comment
+on:
+  issue_comment:
+    types: [created, edited]
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: echo $${{ toJson(github) }}
