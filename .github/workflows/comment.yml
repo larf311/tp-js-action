@@ -16,5 +16,5 @@ jobs:
       - shell: bash
         run: echo ${{ github.workflow_sha }}
       - shell: bash
-        run: echo ${{ toJson(github.event.issue) }}
+        run: echo "${{ toJson(github.event.issue) }}"
 
