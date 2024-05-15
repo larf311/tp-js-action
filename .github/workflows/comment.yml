@@ -8,4 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - shell: bash
+        run: echo ${{ github }}
+      - shell: bash
         run: echo ${{ toJson(github) }}
+
