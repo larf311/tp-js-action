@@ -8,7 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - shell: bash
-        run: echo ${{ github }}
+        run: echo ${{ github.head_ref }}
       - shell: bash
-        run: echo ${{ toJson(github) }}
-
+        run: echo ${{ github.ref }}
+      - shell: bash
+        run: echo ${{ github.sha }}
+      - shell: bash
+        run: echo ${{ github.workflow_sha }}
