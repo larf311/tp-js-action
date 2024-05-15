@@ -1,24 +1,44 @@
-name: Test Ring 1
-
+name: Run test-ring-1 on comment
 on:
-  pull_request:
-    types: [labeled]
+  issue_comment:
+    types: [created, edited]
 
 jobs:
-  handle_test_ring_1_label:
-    permissions:
-      pull-requests: write
+  comment_trigger:
     runs-on: ubuntu-latest
+    outputs:
+      triggerTestRing1: ${{ steps.check_comment.outputs.triggerTestRing1 }}
+      headSha: ${{ steps.check_comment.outputs.headSha }}
+      headRef: ${{ steps.check_comment.outputs.headRef }}
     steps:
-    # - uses: actions/checkout@v4
-    - name: Check if label is "test-ring-1"
-      if: ${{ github.event.label.name == 'test-ring-1' }}
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        echo "Label is test-ring-1, commenting and removing label..."
-        # Comment "hello world"
-        echo "hello world"
-        echo "${{ github.event.pull_request.number }}"
-        # Remove label
-        gh pr edit ${{ github.event.pull_request.number }} --remove-label test-ring-1
+      - uses: actions/checkout@v4
+      - id: check_comment
+        shell: bash
+        run: |
+          comment_string="${{ github.event.comment.body }}"
+          integration_regex='^/test-ring-1'
+          echo "Checking comment: $comment_string"
+          if [[ "$comment_string" =~ $integration_regex ]]; then
+            echo "Match found - Triggering test ring 1"
+            echo "triggerTestRing1=true" >> $GITHUB_OUTPUT
+          else
+            echo "No match found - Not triggering"
+            echo "triggerTestRing1=false" >> $GITHUB_OUTPUT
+          fi
+
+          headInfo=$(gh pr view ${{ github.event.issue.number }} --json headRefName,headRefOid)
+          echo "Head Info: $headInfo"
+          echo "headSha=$(echo $foo | jq -r '.headRefOid')" >> $GITHUB_OUTPUT
+          echo "headRef=$(echo $foo | jq -r '.headRefName')" >> $GITHUB_OUTPUT
+
+
+  trigger-test-ring-1:
+    needs: comment_trigger
+    runs-on: ubuntu-latest
+    if: needs.comment_trigger.outputs.triggerTestRing1 == 'true'
+    steps:
+      - shell: bash
+        run: |
+          echo "Running test-ring-1"
+          echo "Head SHA: ${{ needs.comment_trigger.outputs.headSha }}"
+          echo "Head Ref: ${{ needs.comment_trigger.outputs.headRef }}"
