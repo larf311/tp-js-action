@@ -8,26 +8,24 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       triggerTestRing1: ${{ steps.check_comment.outputs.triggerTestRing1 }}
-      headSha: ${{ steps.check_comment.outputs.headSha }}
-      headRef: ${{ steps.check_comment.outputs.headRef }}
+      headSha: ${{ steps.pr_info.outputs.headSha }}
+      headRef: ${{ steps.pr_info.outputs.headRef }}
     steps:
       - uses: actions/checkout@v4
       - id: check_comment
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const comment = context.payload.comment.body.trim();
+            const startsWithTestRing1 = comment.startsWith('/test-ring-1');
+            console.log('Comment starts with "/test-ring-1":', startsWithTestRing1);
+            return { triggerTestRing1: startsWithTestRing1 };
+      - id: pr_info
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
-          comment_string="${{ github.event.comment.body }}"
-          integration_regex='^/test-ring-1'
-          echo "Checking comment: $comment_string"
-          if [[ "$comment_string" =~ $integration_regex ]]; then
-            echo "Match found - Triggering test ring 1"
-            echo "triggerTestRing1=true" >> $GITHUB_OUTPUT
-          else
-            echo "No match found - Not triggering"
-            echo "triggerTestRing1=false" >> $GITHUB_OUTPUT
-          fi
-
           headInfo=$(gh pr view ${{ github.event.issue.number }} --json headRefName,headRefOid)
           echo "Head Info: $headInfo"
           echo "headSha=$(echo $headInfo | jq -r '.headRefOid')" >> $GITHUB_OUTPUT
