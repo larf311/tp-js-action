@@ -22,6 +22,7 @@ jobs:
             console.log('Comment starts with "/test-ring-1":', startsWithTestRing1);
             return startsWithTestRing1;
       - id: pr_info
+        if: steps.check_comment.outputs.result == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
