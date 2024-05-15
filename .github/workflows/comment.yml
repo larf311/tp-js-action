@@ -13,4 +13,5 @@ jobs:
         run: echo ${{ github.ref }}
       - shell: bash
         run: echo ${{ github.sha }}
-
+      - shell: bash
+        run: echo ${{ toJson(github) }}
