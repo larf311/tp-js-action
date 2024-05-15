@@ -10,11 +10,10 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    # - uses: actions/checkout@v4
     - name: Check if label is "test-ring-1"
       if: ${{ github.event.label.name == 'test-ring-1' }}
       env:
-        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         echo "Label is test-ring-1, commenting and removing label..."
