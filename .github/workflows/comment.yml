@@ -7,7 +7,7 @@ jobs:
   comment_trigger:
     runs-on: ubuntu-latest
     outputs:
-      triggerTestRing1: ${{ steps.check_comment.outputs.triggerTestRing1 }}
+      triggerTestRing1: ${{ steps.check_comment.outputs.result }}
       headSha: ${{ steps.pr_info.outputs.headSha }}
       headRef: ${{ steps.pr_info.outputs.headRef }}
     steps:
@@ -20,7 +20,7 @@ jobs:
             const comment = context.payload.comment.body.trim();
             const startsWithTestRing1 = comment.startsWith('/test-ring-1');
             console.log('Comment starts with "/test-ring-1":', startsWithTestRing1);
-            return { triggerTestRing1: startsWithTestRing1 };
+            return startsWithTestRing1;
       - id: pr_info
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
