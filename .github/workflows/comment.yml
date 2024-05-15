@@ -15,6 +15,5 @@ jobs:
         run: echo ${{ github.sha }}
       - shell: bash
         run: echo ${{ github.workflow_sha }}
-      - shell: bash
-        run: echo '${{ toJSON(github) }}'
+      - run: echo '${{ toJSON(github) }}'
 
