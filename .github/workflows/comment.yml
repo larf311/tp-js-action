@@ -8,6 +8,7 @@ jobs:
   handle_test_ring_1_label:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
     - name: Check if label is "test-ring-1"
       if: ${{ github.event.label.name == 'test-ring-1' }}
       env:
@@ -19,4 +20,5 @@ jobs:
         echo "hello world"
         echo "${{ github.event.pull_request.number }}"
         # Remove label
+        gh --help
         gh pr edit --remove-label ${{ github.event.pull_request.number }} test-ring-1
